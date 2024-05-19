@@ -5,15 +5,15 @@ test.beforeAll('Setup', async () => {
   console.log('Before tests');
 });
 
+// beforeEach keyword. When called inside a test.describe() group, runs before each test in the group.
+test.beforeEach('Read title of the current script', async ({ page }) => {
+  console.log(`Running ${test.info().title}`);
+});
+
 // afterall keyword with a title
 test.afterAll('Teardown', async () => {
   console.log('Done with tests');
   // ...
-});
-
-// beforeEach keyword. When called inside a test.describe() group, runs before each test in the group.
-test.beforeEach('Read title of the current script', async ({ page }) => {
-  console.log(`Running ${test.info().title}`);
 });
 
 // afterEach keyword. When called inside a test.describe() group, runs after each test in the group.
