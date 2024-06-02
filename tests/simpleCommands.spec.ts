@@ -36,7 +36,7 @@ test('reading title of the current test script',async ({ page }) => {
 //   await page.screenshot(testInfo.outputPath('screenshot.png'));
 // });
 
-test.only('Attach screenshot in report', async ({ page }, testInfo) => {
+test('Attach screenshot in report', async ({ page }, testInfo) => {
   await page.goto('https://playwright.dev');
   await expect(page).toHaveURL('https://playwright.dev/');
   const screenshot = await page.screenshot();
@@ -195,10 +195,11 @@ test('basic commands about a test', async ({ page }) => {
   const button = page.getByRole('button').and(page.getByTitle('Subscribe'));//finds a button with a specific title. use of 'and'
   //await locator.blur(); //Calls blur on the element.
   await page.getByRole('checkbox').check(); // radio or check box
+  expect(page.getByLabel('checkbox')).toBeChecked(); //Assert the checked state
   await page.getByRole('textbox').clear();  
   await page.getByRole('button').click(); // clicking a button
   const count = await page.getByRole('listitem').count();
-  // await locator.dblclick();
+
   await page.getByRole('textbox').fill('example value'); // typing a text box
   // await locator.first();
   // await locator.focus();
@@ -207,8 +208,19 @@ test('basic commands about a test', async ({ page }) => {
   await locator.click(); 
   // await locator.getAttribute(name); Returns the matching element's attribute value.
   await page.getByAltText('Playwright logo').click(); //Allows locating elements by their alt text. 
+
+// await page.getByRole('button').click();// Generic click
+// await page.getByRole('button').click({ force: true });
+// await page.getByText('Item').dblclick();// Double click
+// await page.getByText('Item').click({ button: 'right' });// Right click
+// await page.getByText('Item').click({ modifiers: ['Shift'] });// Shift + click
+// await page.getByText('Item').click({ modifiers: ['ControlOrMeta'] }); // Ctrl + click or Windows and Linux. // Meta + click on macOS
+// await page.getByText('Item').hover(); // Hover over element
+// await page.getByText('Item').click({ position: { x: 0, y: 0 } }); // Click the top left corner
+
   await page.getByLabel('Username').fill('john');
   await page.getByLabel('Password').fill('secret');
+  await page.locator('#area').pressSequentially('Hello World!');
   await page.getByPlaceholder('name@example.com').fill('playwright@microsoft.com'); //  Allows locating input elements by the placeholder text. <input type="email" placeholder="name@example.com" />
   await expect(page.getByRole('heading', { name: 'Sign up' })).toBeVisible();
 
@@ -244,6 +256,9 @@ test('basic commands about a test', async ({ page }) => {
   page.once('load', () => console.log('Page loaded!'));
   // setInputFiles // https://playwright.dev/docs/api/class-locator#locator-set-input-files
   // selectOption //dropdown values. https://playwright.dev/docs/api/class-locator#locator-select-option
+await page.getByLabel('Choose a color').selectOption('blue');// Single selection matching the value or label
+await page.getByLabel('Choose a color').selectOption({ label: 'Blue' });// Single selection matching the label
+await page.getByLabel('Choose multiple colors').selectOption(['red', 'green', 'blue']);// Multiple selected items
 });
 
 test('for loop. looping item', async ({ page }) => {

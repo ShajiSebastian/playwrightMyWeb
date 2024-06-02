@@ -4,6 +4,7 @@
 // https://playwright.dev/docs/api/class-genericassertions
 // https://playwright.dev/docs/api/class-locatorassertions
 // https://playwright.dev/docs/api/class-pageassertions
+// https://playwright.dev/docs/actionability
 
 // expect('Hello world!').toEqual(expect.stringContaining('Hello'));  
     
@@ -45,7 +46,7 @@
 // expect(locator).toContainText()
 // expect(locator).toHaveAttribute()
 // expect(locator).toHaveCount()
-// expect(locator).toHaveText()
+// await expect(page.getByTestId('status')).toHaveText('Submitted');
 // expect(locator).toHaveValue()
 // expect(page).toHaveTitle()
 // expect(page).toHaveURL() 

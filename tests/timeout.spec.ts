@@ -19,7 +19,7 @@ test('timeouTest3. Will fail', async ({ page }) => {
 });
 
 // setting timeout at test level
-test('very slow test', async ({ page }) => {
+test('timeout at test level', async ({ page }) => {
   test.setTimeout(120000);
   // ...
 });
