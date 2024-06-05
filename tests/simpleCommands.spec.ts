@@ -1,6 +1,32 @@
 import { test, expect } from '@playwright/test';
 
+// https://playwright.dev/docs/locators
+// https://playwright.dev/docs/other-locators
+// https://playwright.dev/docs/best-practices#use-codegen-to-generate-locators // to generate locator
+// https://playwright.dev/docs/best-practices#use-playwrights-tooling // hepls to write scripting
+
+// page.getByRole() to locate by explicit and implicit accessibility attributes.
+// page.getByText() to locate by text content.
+// page.getByLabel() to locate a form control by associated label's text.
+// page.getByPlaceholder() to locate an input by placeholder.
+// page.getByAltText() to locate an element, usually image, by its text alternative.
+// page.getByTitle() to locate an element by its title attribute.
+// page.getByTestId() to locate an element based on its data-testid attribute (other attributes can be configured).
+
+// await page.getByLabel('User Name').fill('John');
+
+// await page.getByLabel('Password').fill('secret-password');
+
+// await page.getByRole('button', { name: 'Sign in' }).click();
+
+// await expect(page.getByText('Welcome, John!')).toBeVisible();
+
+// Create a page.
+// const page = await context.newPage();
+
 test('Login test', async ({ page }) => {
+  // await page.goto('https://example.com/signin');
+  // await page.waitForURL('**/login'); // if we want to wait till a particular url comes
   await page.goto('/signin');
   await page.getByLabel('User Name').fill('user');
   await page.getByLabel('Password').fill('password');
@@ -8,12 +34,43 @@ test('Login test', async ({ page }) => {
   // ...
 });
 
+// console.log(page.url());
+
+// await page.locator('css=button').click();
+
+// Wrong, will match many elements including <body>
+// await page.locator(':has-text("Playwright")').click();
+// Correct, only matches the <article> element
+// await page.locator('article:has-text("Playwright")').click();
+
+// await page.locator('#nav-bar :text("Home")').click();
+
 // test('Open new tab', async ({ page }) => {
 //   await page.goto('https://playwright.dev/');
 //   await page.goto('chrome://newtab/');
 //   await page.goto('http://britishmalayali.com/');
 
 // });
+
+
+// Fill an input to the right of "Username".
+// await page.locator('input:right-of(:text("Username"))').fill('value');
+
+// Click a button near the promo card.
+// await page.locator('button:near(.promo-card)').click();
+
+// Click the radio input in the list closest to the "Label 3".
+// await page.locator('[type=radio]:left-of(:text("Label 3"))').first().click();
+
+// Click first button
+// await page.locator('button').locator('nth=0').click(); // Click first button
+
+// Click last button
+// await page.locator('button').locator('nth=-1').click();  // Click last button
+
+
+
+
 
 // basic info about a test
 test('basic info about a test', async ({ page }) => {
@@ -195,6 +252,9 @@ test('basic commands about a test', async ({ page }) => {
   const button = page.getByRole('button').and(page.getByTitle('Subscribe'));//finds a button with a specific title. use of 'and'
   //await locator.blur(); //Calls blur on the element.
   await page.getByRole('checkbox').check(); // radio or check box
+  await page.getByRole('checkbox', { name: 'Subscribe' }).check();
+  await page.getByRole('button', { name: /submit/i }).click();
+  await expect(page.getByRole('heading', { name: 'Sign up' })).toBeVisible();
   expect(page.getByLabel('checkbox')).toBeChecked(); //Assert the checked state
   await page.getByRole('textbox').clear();  
   await page.getByRole('button').click(); // clicking a button
@@ -220,12 +280,14 @@ test('basic commands about a test', async ({ page }) => {
 
   await page.getByLabel('Username').fill('john');
   await page.getByLabel('Password').fill('secret');
+  await page.getByPlaceholder('name@example.com').fill('playwright@microsoft.com');
   await page.locator('#area').pressSequentially('Hello World!');
   await page.getByPlaceholder('name@example.com').fill('playwright@microsoft.com'); //  Allows locating input elements by the placeholder text. <input type="email" placeholder="name@example.com" />
   await expect(page.getByRole('heading', { name: 'Sign up' })).toBeVisible();
 
   await page.getByRole('checkbox', { name: 'Subscribe' }).check();
-
+  const product = page.getByRole('listitem').filter({ hasText: 'Product 2' });//locators can be chained to narrow down the search
+  await page.getByRole('listitem').filter({ hasText: 'Product 2' }).getByRole('button', { name: 'Add to cart' }).click();//locators can be chained to narrow down the search
   await page.getByRole('button', { name: /submit/i }).click();
   await page.getByTestId('directions').click(); //<button data-testid="directions">Itinéraire</button>
   await expect(page.getByTitle('Issues count')).toHaveText('25 issues'); //Allows locating elements by their title attribute.
@@ -251,7 +313,12 @@ test('basic commands about a test', async ({ page }) => {
   await page.getByRole('checkbox').setChecked(true);//Set the state of a checkbox or a radio element.
   await page.getByRole('checkbox').uncheck();
   await orderSent.waitFor();
-  await page.screenshot({ path: 'screenshot.png' });
+  // await page.screenshot({ path: 'screenshot.png' }); // Screenshots
+  // await page.screenshot({ path: 'screenshot.png', fullPage: true }); // Full page screenshots
+  const buffer = await page.screenshot();
+  console.log(buffer.toString('base64'));// Rather than writing into a file, you can get a buffer 
+  await page.locator('.header').screenshot({ path: 'screenshot.png' });//screenshot of a single element 
+
   await browser.close();
   page.once('load', () => console.log('Page loaded!'));
   // setInputFiles // https://playwright.dev/docs/api/class-locator#locator-set-input-files
@@ -277,6 +344,9 @@ Consider the following DOM structure:
 */
 
 page.getByText('world');
+await expect(page.getByText('Welcome, John')).toBeVisible();
+// await expect(page.getByText('Welcome, John', { exact: true })).toBeVisible(); // exact match
+// await expect(page.getByText(/welcome, [A-Za-z]+$/i)).toBeVisible(); //regular expression
 
 // Matches first <div>
 page.getByText('Hello world');
@@ -301,8 +371,45 @@ if (await dialog.isVisible())
 await newEmail.click();
 })
 
+// If you absolutely must use CSS or XPath locators, you can use page.locator() to create a locator that takes a selector describing how to find an element in the page. 
+// Playwright supports CSS and XPath selectors, and auto-detects them if you omit css= or xpath= prefix.
+
+await page.locator('css=button').click();
+await page.locator('xpath=//button').click();
+
+await page.locator('button').click(); // same as above
+await page.locator('//button').click(); // same as above
 
 
+// Fill an input with the id "username"
+// await page.locator('id=username').fill('value');
+
+// Click an element with data-test-id "submit"
+// await page.locator('data-test-id=submit').click();
+
+// const button = page.getByRole('button').and(page.getByTitle('Subscribe')); //two locators simultaneously
+// await page.locator('button').locator('visible=true').click(); //Matching only visible elements
+
+// working on list items
+// await expect(page.getByRole('listitem')).toHaveCount(3); //Count items in a list
+// await expect(page.getByRole('listitem')).toHaveText(['apple', 'banana', 'orange']); //Assert all text in a list
+// await page.getByText('orange').click();
+// await page.getByRole('listitem').filter({ hasText: 'orange' }).click();
+// await page.getByTestId('orange').click();
+// onst banana = await page.getByRole('listitem').nth(1); // nth item
+// const rowLocator = page.getByRole('listitem');
+// await rowLocator.filter({ hasText: 'Mary' }).filter({ has: page.getByRole('button', { name: 'Say goodbye' }) }).screenshot({ path: 'screenshot.png' });
+// Iterate elements in a list - one of the ways
+// for (const row of await page.getByRole('listitem').all())
+  // console.log(await row.textContent());
+// Iterate elements in a list - another way
+  // const rows = page.getByRole('listitem');
+  // const count = await rows.count();
+  // for (let i = 0; i < count; ++i)
+  //   console.log(await rows.nth(i).textContent());
+
+  // const child = page.getByText('Hello');
+// const parent = page.getByRole('listitem').filter({ has: child }); // to locate a parent element based on child element
 
 // narrows existing locator according to the options, for example filters by text. It can be chained to filter multiple times.
 // https://playwright.dev/docs/api/class-locator
@@ -313,6 +420,11 @@ await newEmail.click();
 //     .filter({ hasText: 'text in column 1' })
 //     .filter({ has: page.getByRole('button', { name: 'column 2 button' }) })
 //     .screenshot();
+
+// await page.getByRole('listitem').filter({ hasText: 'Product 2' }).getByRole('button', { name: 'Add to cart' }).click();
+// await expect(page.getByRole('listitem').filter({ hasNotText: 'Out of stock' })).toHaveCount(5);
+// await page.getByRole('listitem').filter({ has: page.getByRole('heading', { name: 'Product 2' }) }).getByRole('button', { name: 'Add to cart' }).click();
+// await expect(page.getByRole('listitem').filter({ hasNot: page.getByText('Product 2') })).toHaveCount(1);
 
 // try catch block to catch error
 
