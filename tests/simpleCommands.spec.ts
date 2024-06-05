@@ -313,14 +313,14 @@ test('basic commands about a test', async ({ page }) => {
   await locator.selectText();
   await page.getByRole('checkbox').setChecked(true);//Set the state of a checkbox or a radio element.
   await page.getByRole('checkbox').uncheck();
-  await orderSent.waitFor();
+  // await orderSent.waitFor();
   // await page.screenshot({ path: 'screenshot.png' }); // Screenshots
   // await page.screenshot({ path: 'screenshot.png', fullPage: true }); // Full page screenshots
   const buffer = await page.screenshot();
   console.log(buffer.toString('base64'));// Rather than writing into a file, you can get a buffer 
   await page.locator('.header').screenshot({ path: 'screenshot.png' });//screenshot of a single element 
 
-  await browser.close();
+  // await browser.close();
   page.once('load', () => console.log('Page loaded!'));
   // setInputFiles // https://playwright.dev/docs/api/class-locator#locator-set-input-files
   // selectOption //dropdown values. https://playwright.dev/docs/api/class-locator#locator-select-option
@@ -375,11 +375,11 @@ await newEmail.click();
 // If you absolutely must use CSS or XPath locators, you can use page.locator() to create a locator that takes a selector describing how to find an element in the page. 
 // Playwright supports CSS and XPath selectors, and auto-detects them if you omit css= or xpath= prefix.
 
-await page.locator('css=button').click();
-await page.locator('xpath=//button').click();
+// await page.locator('css=button').click();
+// await page.locator('xpath=//button').click();
 
-await page.locator('button').click(); // same as above
-await page.locator('//button').click(); // same as above
+// await page.locator('button').click(); // same as above
+// await page.locator('//button').click(); // same as above
 
 
 // Fill an input with the id "username"
