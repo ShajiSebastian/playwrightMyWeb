@@ -25,8 +25,8 @@ const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.
 // Create a page.
 // const page = await context.newPage();
 
-test('Login test', async ({ page }) => {
-  // await page.goto('https://example.com/signin');
+test.skip('Login test. May skip', async ({ page }) => {
+  await page.goto('https://example.com/signin');
   // await page.waitForURL('**/login'); // if we want to wait till a particular url comes
   await page.goto('/signin');
   await page.getByLabel('User Name').fill('user');
@@ -247,7 +247,7 @@ test('Declares a test step', async ({ page }) => {
 })
 
 // inner text. 
-test('basic commands about a test', async ({ page }) => {
+test.skip('sample commands about a test. May skip', async ({ page }) => {
   const texts1 = await page.getByRole('link').allInnerTexts(); //Returns an array of values
   const texts2 = await page.getByRole('link').allTextContents(); //Returns an array of values
   const button = page.getByRole('button').and(page.getByTitle('Subscribe'));//finds a button with a specific title. use of 'and'
@@ -336,7 +336,7 @@ test('for loop. looping item', async ({ page }) => {
 
 // Matches <span>
 
-test('getByText', async ({ page }) => {
+test.skip('getByText. May skip', async ({ page }) => {
 
 /*  
 Consider the following DOM structure:
@@ -362,7 +362,7 @@ page.getByText(/Hello/);
 page.getByText(/^hello$/i);
 })
 
-test('usage of or ', async ({ page }) => {
+test.skip('usage of or. May skip ', async ({ page }) => {
 //usage of 'or' // Consider a scenario where you'd like to click on a "New email" button, but sometimes a security settings dialog shows up instead. In this case, you can wait for either a "New email" button, or a dialog and act accordingly.
 const newEmail = page.getByRole('button', { name: 'New' });
 const dialog = page.getByText('Confirm security settings');
