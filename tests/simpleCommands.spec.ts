@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.
 
 // https://playwright.dev/docs/locators
 // https://playwright.dev/docs/other-locators
