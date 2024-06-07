@@ -20,7 +20,7 @@ export default defineConfig({
   //   timeout: 10 * 1000,
   // },
   name: 'acceptance tests by shaji',
-  globalTimeout: process.env.CI ? 10000 * 1 * 1 : undefined,
+  // globalTimeout: process.env.CI ? 10000 * 1 * 1 : undefined,
   testDir: './tests',
   // testMatch: /.*\.e2e\.js/, // run only matching test files
   // testIgnore: '**/test-assets/**', // to ignore test files
