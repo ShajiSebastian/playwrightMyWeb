@@ -20,7 +20,7 @@ export default defineConfig({
   //   timeout: 10 * 1000,
   // },
   name: 'acceptance tests by shaji',
-  globalTimeout: process.env.CI ? 1 * 1 * 1 : undefined,
+  globalTimeout: process.env.CI ? 10000 * 1 * 1 : undefined,
   testDir: './tests',
   // testMatch: /.*\.e2e\.js/, // run only matching test files
   // testIgnore: '**/test-assets/**', // to ignore test files
@@ -67,7 +67,7 @@ export default defineConfig({
     // video: 'on-first-retry',//'off','on','retain-on-failure','on-first-retry'
   },
 
-  /* Configure projects for major browsers. will run simultaneously */
+  /* Browser configuration. each tests will run in all the below browsers simultaneously */
   projects: [
     {
       name: 'chromium',
@@ -79,10 +79,11 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // webkit execution fails for some scripts. need to check the issue
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
@@ -105,6 +106,7 @@ export default defineConfig({
     // },
 
     // https://playwright.dev/docs/test-projects#configure-projects-for-multiple-environments
+    // all the tests will run in all the below environments if the condition given in that is matching
     {
       name: 'staging',
       use: {

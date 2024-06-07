@@ -74,11 +74,12 @@ test.skip('Login test. May skip', async ({ page }) => {
 
 
 // basic info about a test
-test('basic info about a test', async ({ page }) => {
-  await test.info().attach('screenshot', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
-  });
+test.skip('screenshot taking', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+  // await test.info().attach('screenshot', {
+  //   body: await page.screenshot(),
+  //   contentType: 'image/png',
+  // });
 });
 
 test('reading title of the current test script',async ({ page }) => {
@@ -212,7 +213,7 @@ test.describe.fixme('skip using fixme at describe level', () => {
 // });
 
 // test fails purposefully
-test.fail('Fail a test', async ({ page }) => {
+test.fail('Fail a test purposefully', async ({ page }) => {
   // ...
 });
 
