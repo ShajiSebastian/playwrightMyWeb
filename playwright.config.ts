@@ -41,7 +41,11 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  // reporter: process.env.CI ? 'dot' : 'list', // to be used in CI. // Dot reporter is very concise - it only produces a single character per successful test run. It is the default on CI and useful where you don't want a lot of output., default 'list' when running locally
+  // example below is using a ternary operator where it first checking if the environment variable CI is true or undefined/false. 
+  // ...If true the top line with the "?" gets run, if false (running the playwright command from my local machine) the "html" and "indent-list-reporter" reports will be used.
+  // reporter: process.env.CI 
+    // ? 'dot' //[["list"], ["html"], ["@currents/playwright"]]
+    // : 'list', //[["html"], ["indent-list-reporter"]], // to be used in CI. // Dot reporter is very concise - it only produces a single character per successful test run. It is the default on CI and useful where you don't want a lot of output., default 'list' when running locally
      reporter: 'html', //'list','line','html','dot'
     //  reporter: [['list', { printSteps: true }]], //opt into the step rendering
   // multiple reporters. instead of above single one
@@ -69,15 +73,15 @@ export default defineConfig({
 
   /* Browser configuration. each tests will run in all the below browsers simultaneously */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
     // webkit execution fails for some scripts. need to check the issue
     // {
@@ -107,20 +111,20 @@ export default defineConfig({
 
     // https://playwright.dev/docs/test-projects#configure-projects-for-multiple-environments
     // all the tests will run in all the below environments if the condition given in that is matching
-    {
-      name: 'staging',
-      use: {
-        baseURL: 'staging.example.com',
-      },
-      retries: 2,
-    },
-    {
-      name: 'production',
-      use: {
-        baseURL: 'production.example.com',
-      },
-      retries: 0,
-    },
+    // {
+    //   name: 'staging',
+    //   use: {
+    //     baseURL: 'staging.example.com',
+    //   },
+    //   retries: 2,
+    // },
+    // {
+    //   name: 'production',
+    //   use: {
+    //     baseURL: 'production.example.com',
+    //   },
+    //   retries: 0,
+    // },
 
     // https://playwright.dev/docs/test-projects#splitting-tests-into-projects
     {

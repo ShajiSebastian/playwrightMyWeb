@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import { AssertionError } from 'assert';
+import { listenerCount } from 'process';
 const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.
 
 // https://playwright.dev/docs/locators
@@ -24,6 +26,13 @@ const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.
 
 // Create a page.
 // const page = await context.newPage();
+
+// If we want to use a unique url in a script we can configure it localy within that script file. The URL given in the local file
+// will be given preference over the URL given in playwright.config.ts file
+test.use({
+  // baseURL: "https://play.letcode.in/"
+})
+
 
 test.skip('Login test. May skip', async ({ page }) => {
   await page.goto('https://example.com/signin');
@@ -69,9 +78,22 @@ test.skip('Login test. May skip', async ({ page }) => {
 // Click last button
 // await page.locator('button').locator('nth=-1').click();  // Click last button
 
+// await expect(page.getByRole('textbox').nth(1).toHaveValue('2'))
+// await page.fill(selector, expectedText.toUpperCase());
+// await expect(page.$(selector)).toHaveValue(expectedText);
+// await expect(await page.$(selector)).toHaveValue(expectedText, { ignoreCase: true });
+// await expect([page, selector]).toHaveValue(expectedText, { trim: true });
 
+// const expectedPattern = /[C|c]ontext/;
+// await expect(page.$(selector)).toMatchText(expectedPattern);
 
+// const expectedPattern = /context/gi;
+// await expect(await page.$(selector)).toMatchText(expectedPattern);
 
+// const expectedPattern = /[C|c]ontext/;
+// await expect([page, selector]).toMatchText(expectedPattern, { textMethod: 'innerText' });
+
+// Take Screenshot
 
 // basic info about a test
 test.skip('screenshot taking', async ({ page }) => {
@@ -80,14 +102,6 @@ test.skip('screenshot taking', async ({ page }) => {
   //   body: await page.screenshot(),
   //   contentType: 'image/png',
   // });
-});
-
-test('reading title of the current test script',async ({ page }) => {
-  console.log(`The title of the current test is:  ${test.info().title}`);
-  console.log(`The titlePath of the current test is: ${test.info().titlePath}`);
-  await page.goto('https://playwright.dev/');
-  console.log(`The duration of the current test is: ${test.info().duration}`);
-  console.log(`test.info().status is: ${test.info().status}`);
 });
 
 // test('basic test', async ({ page }, testInfo) => {
@@ -101,6 +115,23 @@ test('Attach screenshot in report', async ({ page }, testInfo) => {
   const screenshot = await page.screenshot();
   await testInfo.attach('screenshotShaji', { body: screenshot, contentType: 'image/png' });
 });
+// await page.getByRole('link').screenshot(); //Take a screenshot of the element matching the locator.
+
+ // await page.screenshot({ path: 'screenshot.png' }); // Screenshots
+  // await page.screenshot({ path: 'screenshot.png', fullPage: true }); // Full page screenshots
+  const buffer = await page.screenshot();
+  console.log(buffer.toString('base64'));// Rather than writing into a file, you can get a buffer 
+  // await page.locator('.header').screenshot({ path: 'screenshot.png' });//screenshot of a single element 
+
+test('reading title of the current test script',async ({ page }) => {
+  console.log(`The title of the current test is:  ${test.info().title}`);
+  console.log(`The titlePath of the current test is: ${test.info().titlePath}`);
+  await page.goto('https://playwright.dev/');
+  console.log(`The duration of the current test is: ${test.info().duration}`);
+  console.log(`test.info().status is: ${test.info().status}`);
+});
+
+
 
 // example for describe. group of tests together
 test.describe('Describe ttile with two tests', () => {
@@ -118,13 +149,15 @@ test.describe('Describe ttile with two tests', () => {
 test('reading current url', async ({ page }) => {
   await page.goto('https://playwright.dev/');
   console.log(`Current url is: ${page.url()}`);
+  expect(page.url()).toBe("https://playwright.dev/")
+  await expect(page).toHaveURL('https://playwright.dev/');
 });
 
 // title with partial match
 test('reading title of a page', async ({ page }) => {
   await page.goto('https://playwright.dev/');
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+  await expect(page).toHaveTitle(/Playwright/); // contains
 });
 
 // reading a text from page
@@ -133,6 +166,9 @@ test('reading text from a page', async ({ page }) => {
   const name = await page.innerText('.navbar__title');
   expect(name).toBe('Playwright');
 });
+
+// let name1='shaji'
+// expect(name1, "name should be shaji").toBe('shaji'); // customized error message shown in execution report
 
 // click on the link
 // checking heading / reading text / toBeVisible keyword
@@ -144,7 +180,15 @@ test('click on a link', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-// sample for Annotation. Test annotations are displayed in the test report
+// expect(result.passed).toBe(0);
+// expect(1 + 1).toBe(7);// fail always
+
+  // create a locator
+  // const getStarted = page.locator('text=Get Started');
+  // Expect an attribute "to be strictly equal" to the value.
+  // await expect(getStarted).toHaveAttribute('href', '/docs/intro');
+
+// sample for Annotation. just to display some information in the test report
 test('annotation in a test', { 
   annotation: {
     type: 'issue',
@@ -201,6 +245,48 @@ test.describe.fixme('skip using fixme at describe level', () => {
 });
 
 
+// await expect(page).toHaveTitle(expectedTitle);
+// await expect(page).toHaveTitle(expectedTitle, { ignoreCase: true });
+// await expect(page).not.toHaveTitle(expectedTitle);
+
+// await expect(page).toHaveUrl(expectedUrl);
+// await expect(page).not.toHaveUrl(BASE_URL);
+// await expect(page).toHaveUrl(expectedUrl, { 1000 });//timeout
+
+// json assertion
+
+// await expect(response).toContainJSON({ age: 30, name: 'John' });
+
+// await expect(response).toHaveJSON([
+//   { age: 30, name: 'John' },
+//   { age: 19, name: 'Adam' },
+// ]);
+
+// await expect(response).toMatchJSON({ age: 30, name: 'John' });
+
+// await expect(response).toContainTextContent('<h1>Hello, World!</h1>');
+// await expect(response).toContainTextContent('Hello');
+
+// const response = await request.get('/');
+// await expect(response).toHaveHeaders({ 'content-length': '22' });
+
+// const response = await request.get('/');
+// await expect(response).toHaveHeaders({ 'content-length': '22', 'content-type': 'text/html' });
+
+// const response = await request.get('/');
+// await expect(response).toHaveHeader('content-length');
+
+// const response = await request.get('/');
+// await expect(response).toHaveHeader('content-length', '22');
+
+// const response = await request.get('/');
+// await expect(response).toHaveContentType('text/html');
+
+// const response = await request.get('/');
+// await expect(response).toHaveLocation(baseURL!);
+
+// const response = await request.get('/redirect');
+// await expect(response).toBeRedirected(`${baseURL}demo`);
 
 // run only the test
 // test.only('focus this test', async ({ page }) => {
@@ -226,7 +312,7 @@ test('fail only in WebKit', async ({ page, browserName }) => {
 });
 
 // making a test slow. call test.slow() inside the test body.
-test('slow test', async ({ page }) => {
+test.slow('slow test', async ({ page }) => {
   test.slow();
   // ...
 });
@@ -247,6 +333,47 @@ test('Declares a test step', async ({ page }) => {
 });
 })
 
+// variable declaring in one file. importing in another file. using it in command
+// in this example the url is declared in /src/utils/constants file and importing it in test file
+// export const BASE_URL = 'http://the-internet.herokuapp.com';
+// import { BASE_URL } from '../src/utils/constants';
+// await page.goto(`${BASE_URL}/checkboxes`);
+
+// const selector = '#checkboxes input';
+// await page.check(selector);
+
+// await locator.pressSequentially('Hello'); // Types instantly
+// await locator.pressSequentially('World', { delay: 100 }); // Types slower, like a user
+
+// assertions- list
+// https://playwright.dev/docs/actionability#assertions
+
+// expect(locator).toBeAttached()	Element is attached
+// expect(locator).toBeChecked()	Checkbox is checked
+// expect(locator).toBeDisabled()	Element is disabled
+// expect(locator).toBeEditable()	Element is editable
+// expect(locator).toBeEmpty()	Container is empty
+// expect(locator).toBeEnabled()	Element is enabled
+// expect(locator).toBeFocused()	Element is focused
+// expect(locator).toBeHidden()	Element is not visible
+// expect(locator).toBeInViewport()	Element intersects viewport
+// expect(locator).toBeVisible()	Element is visible
+// expect(locator).toContainText()	Element contains text
+// expect(locator).toHaveAttribute()	Element has a DOM attribute
+// expect(locator).toHaveClass()	Element has a class property
+// expect(locator).toHaveCount()	List has exact number of children
+// expect(locator).toHaveCSS()	Element has CSS property
+// expect(locator).toHaveId()	Element has an ID
+// expect(locator).toHaveJSProperty()	Element has a JavaScript property
+// expect(locator).toHaveText()	Element matches text
+// expect(locator).toHaveValue()	Input has a value
+// expect(locator).toHaveValues()	Select has options selected
+// expect(page).toHaveTitle()	Page has a title
+// expect(page).toHaveURL()	Page has a URL
+// expect(response).toBeOK()	Response has an OK status
+
+// expect(newTabUrlActual == newTabUrlExpect).toBeTruthy();
+
 // inner text. 
 test.skip('sample commands about a test. May skip', async ({ page }) => {
   const texts1 = await page.getByRole('link').allInnerTexts(); //Returns an array of values
@@ -258,10 +385,18 @@ test.skip('sample commands about a test. May skip', async ({ page }) => {
   await page.getByRole('button', { name: /submit/i }).click();
   await expect(page.getByRole('heading', { name: 'Sign up' })).toBeVisible();
   expect(page.getByLabel('checkbox')).toBeChecked(); //Assert the checked state
+  // await expect(page.$(selector)).toBeChecked(false);
+  // await expect([page, selector]).not.toBeChecked(true);
+  // await expect([page, selector]).toBeChecked(false, { 3000 }); // timeout
   await page.getByRole('textbox').clear();  
   await page.getByRole('button').click(); // clicking a button
   const count = await page.getByRole('listitem').count();
 
+  // await expect(page.$(selector)).toBeDisabled(false); //toBeEnabled,toBeFocused,toBeVisible,toBeChecked
+  // await expect([page, selector]).not.toBeDisabled(true);
+  // await expect(await page.$(selector)).toBeDisabled();
+  // await expect([page, '#tick']).toBeDisabled(true, { timeout }); //timeout
+// 
   await page.getByRole('textbox').fill('example value'); // typing a text box
   // await locator.first();
   // await locator.focus();
@@ -280,6 +415,9 @@ test.skip('sample commands about a test. May skip', async ({ page }) => {
 // await page.getByText('Item').hover(); // Hover over element
 // await page.getByText('Item').click({ position: { x: 0, y: 0 } }); // Click the top left corner
 
+// await page.click('text=Explore Workspace');
+// await page.click('button:has-text("Button Hold!")', {delay: 3000}) //long click 
+
   await page.getByLabel('Username').fill('john');
   await page.getByLabel('Password').fill('secret');
   await page.getByPlaceholder('name@example.com').fill('playwright@microsoft.com');
@@ -293,6 +431,12 @@ test.skip('sample commands about a test. May skip', async ({ page }) => {
   await page.getByRole('button', { name: /submit/i }).click();
   await page.getByTestId('directions').click(); //<button data-testid="directions">Itinéraire</button>
   await expect(page.getByTitle('Issues count')).toHaveText('25 issues'); //Allows locating elements by their title attribute.
+  // await expect(await page.$(selector)).toHaveText(expectedText, { ignoreCase: true });
+  // await expect([page, selector]).toHaveText(expectedText, { textMethod: 'innerText' });
+  // await expect([page, '#toast']).toHaveText(EXPECTED_TEXT, { 3000, trim: true }); //timeout
+
+  await page.locator('input[value="submit"').check() // use double quotes for submit for exact match. else it will consider all other semi matching words
+
   await page.getByRole('link').hover();//Hover over the matching element.
   await locator.innerText();
   const value = await page.getByRole('textbox').inputValue();
@@ -304,22 +448,38 @@ test.skip('sample commands about a test. May skip', async ({ page }) => {
   const visible = await page.getByRole('button').isVisible();
   const banana = await page.getByRole('listitem').last();
   const banana2 = await page.getByRole('listitem').nth(2); //Returns locator to the n-th matching element. It's zero based, nth(0) selects the first element.
+  const abcd = await page.getByRole('link', {name : 'download'}).nth(2).click();
+  // await page.getByRole('img', { name: product }).click();
   await locator.pressSequentially('Hello'); // Types instantly
   await locator.pressSequentially('World', { delay: 100 }); // Types slower, like a user  
   const locator1 = page.getByLabel('Password'); //An example of typing into a text field and then submitting the form:
   await locator1.pressSequentially('my password');
   await locator1.press('Enter');
-  await page.getByRole('link').screenshot(); //Take a screenshot of the element matching the locator.
+  
   await locator.scrollIntoViewIfNeeded();
   await locator.selectText();
   await page.getByRole('checkbox').setChecked(true);//Set the state of a checkbox or a radio element.
   await page.getByRole('checkbox').uncheck();
   // await orderSent.waitFor();
-  // await page.screenshot({ path: 'screenshot.png' }); // Screenshots
-  // await page.screenshot({ path: 'screenshot.png', fullPage: true }); // Full page screenshots
-  const buffer = await page.screenshot();
-  console.log(buffer.toString('base64'));// Rather than writing into a file, you can get a buffer 
-  await page.locator('.header').screenshot({ path: 'screenshot.png' });//screenshot of a single element 
+ 
+
+  await expect(page.getByTestId('uitk-date-selector-input1-default')).toContainText('23 Jun - 28 Jun');
+  await expect(page.getByTestId('uitk-date-selector-input1-default')).toContainText('23 Jun - 28 Jun', { ignoreCase: true });
+  await expect(page.getByLabel('Remove Caravan park/campsite').locator('span')).toContainText('Caravan park/campsite');
+  // await expect([page, selector]).toContainText(expectedText, { textMethod: 'innerText' });
+  // await expect([page, '#tick']).toContainText(expectedText, { timeout });
+
+  // await expect(page).toContainTitle(expectedTitle);
+  // await expect(page).toContainTitle(expectedTitle, { ignoreCase: true });
+  // await expect(page).not.toContainTitle(expectedTitle);
+
+  // await expect(page).toContainUrl(BASE_URL);
+  // await expect(page).not.toContainUrl(`${BASE_URL}/1`);
+  // await expect(page).toContainUrl('status_codes', { timeout });
+
+  // await expect(page.$(selector)).toContainValue(expectedText);
+  // await expect(await page.$(selector)).toContainValue(expectedText, { ignoreCase: true });
+  // await expect([page, selector]).toContainValue(expectedText, { trim: true });
 
   // await browser.close();
   page.once('load', () => console.log('Page loaded!'));
@@ -334,6 +494,10 @@ test('for loop. looping item', async ({ page }) => {
   for (const li of await page.getByRole('listitem').all())
   await li.click();
 });
+
+// await page.goto("https://bookcart.azurewebsites.net/", {
+//   waitUntil:"domcontentloaded"
+// })
 
 // Matches <span>
 
@@ -382,6 +546,7 @@ await newEmail.click();
 // await page.locator('button').click(); // same as above
 // await page.locator('//button').click(); // same as above
 
+// await expect(page.locator('//button').toHaveText('abcd', { ignoreCase: true });
 
 // Fill an input with the id "username"
 // await page.locator('id=username').fill('value');
@@ -442,3 +607,44 @@ await newEmail.click();
 //     // Do something if this is a timeout.
 //   }
 // 
+
+
+
+// soft Assertion
+// await expect.soft(page.getByRole('heading', { name: 'Subscribe' })).toBeTruthy();
+
+// keeps trying to execute multiple times till it get success response or time out occurs
+// https://playwright.dev/docs/test-assertions#expectpoll
+test.skip('retry till pass ', async ({ page }) => {
+await expect.poll(async () => {
+  const response = await page.request.get('https://api.example.com');
+  return response.status();
+}, {
+  // Custom expect message for reporting, optional.
+  message: 'make sure API eventually succeeds',
+  // Poll for 10 seconds; defaults to 5 seconds. Pass 0 to disable timeout.
+  timeout: 10000,
+}).toBe(200);
+})
+
+
+await expect.poll(async () => {
+  const response = await page.request.get('https://api.example.com');
+  return response.status();
+}, {
+  // Probe, wait 1s, probe, wait 2s, probe, wait 10s, probe, wait 10s, probe
+  // ... Defaults to [100, 250, 500, 1000].
+  intervals: [1_000, 2_000, 10_000],
+  timeout: 60_000
+}).toBe(200);
+
+  // Assert footer widgets are present
+  // await expect(page.getByRole('heading', { name: 'Subscribe' })).toBeTruthy();
+  // await expect(page.getByRole('heading', { name: 'Recent Blog Posts' })).toBeTruthy();
+  // await expect(page.getByRole('heading', { name: 'Social' })).toBeTruthy();
+  // await page.getByRole('checkbox').isChecked().toBeTruthy();
+  // await page.getByRole('checkbox').isChecked().toBeFalsy();
+
+// reading url and slit and pop
+  // const filename = page.url()?.split('/').pop()
+  // console.log(`Window opened: ${filename}`)

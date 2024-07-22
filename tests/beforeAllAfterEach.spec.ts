@@ -8,6 +8,7 @@ test.beforeAll('Setup', async () => {
 // beforeEach keyword. When called inside a test.describe() group, runs before each test in the group.
 test.beforeEach('Read title of the current script', async ({ page }) => {
   console.log(`Running ${test.info().title}`);
+  // await page.goto('https://cloudtesting.contosotraders.com/')
 });
 
 // afterall keyword with a title

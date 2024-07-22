@@ -1,0 +1,37 @@
+// import LoginPage from "@pages/Login.page"
+// import HeaderPage from "@pages/Header.page"
+// import CommonFunctions from "@pages/common.page"
+// import LoginPage from "/Users/shajisebastian/Desktop/Shaji/Learning/Automation/Playwright/PlaywrightWeb/tests/pom/letcodemodules/credentials/Login.page"
+
+import LoginPage from "./../pom/letcodemodules/credentials/Login.page"
+import HeaderPage from "./../pom/letcodemodules/credentials/Header.page"
+import CommonFunctions from "./../pom/letcodemodules/credentials/common.page"
+
+
+import { test as baseTexst } from "@playwright/test";
+// var a;
+// var b: string;
+
+// type pages=  {
+//     loginPage: LoginPage;
+//     headerPage: HeaderPage;
+//     commonPage: CommonFunctions;
+// }
+
+const test = baseTexst.extend<{
+    loginPage: LoginPage;
+    headerPage: HeaderPage;
+    commonPage: CommonFunctions;
+}>({
+    loginPage: async ({ page }, use) => {
+        await use(new LoginPage(page));
+    },
+    headerPage: async ({ page, isMobile }, use) => {
+        await use(new HeaderPage(page, isMobile));
+    },
+    commonPage: async ({ page }, use) => {
+        await use(new CommonFunctions(page));
+    },
+})
+export default test;
+export const expect = test.expect;
