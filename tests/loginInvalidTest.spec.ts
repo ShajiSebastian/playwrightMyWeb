@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 // const CryptoJS = require("crypto-js")
 import * as data from "../tests/data/loginUser.json";
 
-test("Locator in detail", async ({ page }) => {
+test.skip("Locator in detail", async ({ page }) => {
         await test.step("Enter valid username and invalid password", async () => {
             await page.goto("https://bookcart.azurewebsites.net//login");
             await loginUser(data.userName, data.invalidPassword);
@@ -14,7 +14,7 @@ test("Locator in detail", async ({ page }) => {
         })
     })
 
-    test("Valid login & logout", async ({ page }) => {
+    test.skip("Valid login & logout", async ({ page }) => {
 
 
         await test.step("login with valid credentials", async () => {

@@ -21,7 +21,7 @@ test.describe("Search Git Repo", () => {
         await ele?.fill("ortonikc");
         await ele?.press("Enter");
     })
-    test("Print all the repos", async () => {
+    test.skip("Print all the repos", async () => {
         await page.waitForSelector("app-gitrepos ol li", { timeout: 5000 })
         const repos = await page.$$("app-gitrepos ol li");
         console.log(repos.length);

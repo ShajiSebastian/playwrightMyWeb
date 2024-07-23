@@ -9,5 +9,6 @@ await page.waitForTimeout(3000);
 const fileChooser = await fileChooserPromise;
 await fileChooser.setFiles('./tests/uploadFiles/sample.txt');
 await page.waitForTimeout(3000);
-await page.locator("input[type='submit']").click();})
+await page.locator("input[type='submit']").click();
+})
 

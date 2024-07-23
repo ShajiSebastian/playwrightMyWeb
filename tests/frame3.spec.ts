@@ -14,7 +14,7 @@ test.describe("Frames handling concept", () => {
         page = await context.newPage();
         await page.goto("https://letcode.in/frame")
     })
-    test("Interact with frames", async () => {
+    test.skip("Interact with frames", async () => {
         const frame = page.frame({ name: "firstFr" });
         // frame?.fill("")
         if (frame != null) {

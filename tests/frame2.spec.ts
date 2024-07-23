@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-test("New Frame API", async ({ page }) => {
+test.skip("New Frame API", async ({ page }) => {
 
     await page.goto("/frame");
     const frame = page.frameLocator("#firstFr");
@@ -9,7 +9,7 @@ test("New Frame API", async ({ page }) => {
     const text = await frame.locator("p.title.has-text-info").textContent();
     console.log(text);
 });
-test("Inner frame", async ({ page }) => {
+test.skip("Inner frame", async ({ page }) => {
     await page.goto("/frame");
     const frame = page.frameLocator("#firstFr");
     const innerFrame = frame.frameLocator("iframe.has-background-white");

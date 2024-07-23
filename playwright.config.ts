@@ -127,21 +127,23 @@ export default defineConfig({
     // },
 
     // https://playwright.dev/docs/test-projects#splitting-tests-into-projects
-    {
+    // {
+    //   name: 'Smoke',
+    //   testMatch: /.*smoke.spec.ts/,
+    //   retries: 0,
+    // },
+     {
       name: 'Smoke',
-      testMatch: /.*smoke.spec.ts/,
+      testMatch: /.*.spec.ts/,
       retries: 0,
     },
-    {
-      name: 'Default',
-      testIgnore: /.*smoke.spec.ts/,
-      retries: 2,
-    },
-
+    // {
+    //   name: 'Default',
+    //   testIgnore: /.*smoke.spec.ts/,
+    //   retries: 1,
+    // },
 
   ],
-
-  
 
   /* Run your local dev server before starting the tests */
   // webServer: {

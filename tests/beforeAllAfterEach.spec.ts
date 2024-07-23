@@ -31,3 +31,6 @@ test.afterEach('Status check', async ({ page }) => {
     console.log(`Did not run as expected, ended up at error url ${page.url()}`);
 });
 
+test("beforeafterEach", async ({ page }) => {
+  await page.goto("https://letcode.in/buttons");
+})

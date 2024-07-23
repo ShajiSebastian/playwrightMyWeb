@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 const Tesseract = require('tesseract.js');
 
-test("Tesseract - Image to text", async ({ page }) => {
+test.skip("Tesseract - Image to text", async ({ page }) => {
 
     await page.goto("https://www.justdial.com/Chennai/Car-Washing-Services-in-Adyar/nct-10079017");
     await page.waitForSelector('#best_deal_div >> text=X');

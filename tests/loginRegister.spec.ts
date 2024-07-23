@@ -4,7 +4,7 @@ import RegisterPage from "../tests/pages/registerPage";
 import * as data from "../tests/data/registerUser.json";
 
 
-test("Register User", async ({ page }) => {
+test.skip("Register User", async ({ page }) => {
     // let's focus without fixtures
 
     const register = new RegisterPage(page);

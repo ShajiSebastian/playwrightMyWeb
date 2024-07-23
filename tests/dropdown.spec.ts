@@ -27,7 +27,7 @@ test("Select from dropdown", async ({ page },testInfo) => {
 
 
 // open index.html to execute this test case
-test("Select from bootstrap dropdown", async ({ page }) => {
+test.skip("Select from bootstrap dropdown", async ({ page }) => {
 
   // await page.goto("file:///Y:/my-code-base/Playwright-Test-Runner/advanceSelect/index.html");
   await page.goto("http://127.0.0.1:5500/tests/dropdownIndex.html");

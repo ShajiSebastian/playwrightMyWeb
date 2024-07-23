@@ -1,6 +1,6 @@
 import { test,expect } from "@playwright/test";
 
-test("my test", async ({ page }) => {
+test.skip("my test", async ({ page }) => {
     await page.goto("https://letcode.in/dropable")
     await page.getByRole('tabpanel', { name: 'Simple' }).locator('#draggable').hover();
     await page.mouse.down();

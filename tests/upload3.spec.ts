@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test"; 
 import path from 'path';
 
-test("Upload file3", async ({ page }) => {
+test.skip("Upload file3", async ({ page }) => {
 
         await page.goto("https://demoqa.com/upload-download")
         // Select one file

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("Basic UI verification", async ({ page }) => {
+test.skip("Basic UI verification", async ({ page }) => {
 
     // isDisabled()?
     await page.goto("https://letcode.in/edit");

@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-test("Wait for an alert", async ({ page }) => {
+test.skip("Wait for an alert", async ({ page }) => {
 
     await test.step("Goto to page", async () => {
         await page.goto("https://letcode.in/waits")

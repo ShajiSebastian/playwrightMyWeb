@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-test("Type of text", async ({ page }) => {
+test.skip("Type of text", async ({ page }) => {
     // await page.goto("http://127.0.0.1:5500/allText/textReadIndex.html");
     await page.goto("http://127.0.0.1:5500/tests/textReadIndex.html");
     await test.step("Inner HTML", async () => {
