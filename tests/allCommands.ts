@@ -33,7 +33,8 @@ test.use({
   // baseURL: "https://play.letcode.in/"
 })
 
-
+// The keyword async before a function makes the function return a promise
+// The keyword await before a function makes the function wait for a promise
 test.skip('Login test. May skip', async ({ page }) => {
   await page.goto('https://example.com/signin');
   // await page.waitForURL('**/login'); // if we want to wait till a particular url comes
@@ -43,6 +44,8 @@ test.skip('Login test. May skip', async ({ page }) => {
   await page.getByText('Sign in').click();
   // ...
 });
+
+// await page.pause()
 
 // console.log(page.url());
 
@@ -72,7 +75,7 @@ test.skip('Login test. May skip', async ({ page }) => {
 // Click the radio input in the list closest to the "Label 3".
 // await page.locator('[type=radio]:left-of(:text("Label 3"))').first().click();
 
-// Click first button
+// Click first / last / nth item
 // await page.locator('button').locator('nth=0').click(); // Click first button
 
 // Click last button
@@ -187,6 +190,8 @@ test('click on a link', async ({ page }) => {
   // const getStarted = page.locator('text=Get Started');
   // Expect an attribute "to be strictly equal" to the value.
   // await expect(getStarted).toHaveAttribute('href', '/docs/intro');
+  // await expect(page.locator('selector')).toHaveAttribute('class', /.*value/)
+  // await expect(locator).toHaveClass('selected row');
 
 // sample for Annotation. just to display some information in the test report
 test('annotation in a test', { 

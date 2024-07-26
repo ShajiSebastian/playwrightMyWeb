@@ -34,8 +34,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   // outputDir: 'test-results', // Folder for test artifacts such as screenshots, videos, traces, etc.
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  // retries: 2,
+  // retries: process.env.CI ? 2 : 0,
+  retries: 2,
   // The maximum number of test failures for the whole test suite run. After reaching this number, testing will stop and exit with an error.
   // maxFailures: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
@@ -64,11 +64,12 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer . 
     Traces are normally run in a Continuous Integration(CI) environment, because locally you can use UI Mode for developing and debugging tests. 
     However, if you want to run traces locally without using UI Mode, you can force tracing to be on with --trace on.*/
-    trace: 'on-first-retry', // other values 'on','off','on-first-retry','on-all-retries','retain-on-failure','retain-on-first-failure'
+    trace: 'on', // other values 'on','off','on-first-retry','on-all-retries','retain-on-failure','retain-on-first-failure'
     screenshot: 'on', //'off','only-on-failure'
     // baseURL: 'http://localhost:3000',
     // browserName: 'firefox',
-    // video: 'on-first-retry',//'off','on','retain-on-failure','on-first-retry'
+    // video: 'on-first-retry',//'off','on','retain-on-failure','on-first-retry',
+    // launchOptions: {slowMo: 1000}// for slow execution
   },
 
   /* Browser configuration. each tests will run in all the below browsers simultaneously */

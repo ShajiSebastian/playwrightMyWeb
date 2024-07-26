@@ -1,5 +1,25 @@
 import { test, expect } from '@playwright/test';
 
+// beforeAll
+// executed before all tests in the file
+// when used inside describe, runs before all tests in the group
+// If multiple beforeAll is used, they will run in the order of their registration
+
+// beforeEach
+// executed before each test in the file
+// when used inside describe, runs before each test in the group
+// If multiple beforeEach is used, they will run in the order of their registration
+
+// afterAll
+// executes after all tests in the file
+// when used inside describe, runs after all tests in the group
+// If multiple afterAll is used, they will run in the order of their registration
+
+// afterEach
+// executes after each test in the file
+// when used inside describe, runs after each test in the group
+// If multiple afterEach is used, they will run in the order of their registration
+
 // beforeall keyword. When called inside a test.describe() group, runs before all tests in the group.
 test.beforeAll('Setup', async () => {
   console.log('Before tests');
