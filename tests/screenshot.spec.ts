@@ -22,6 +22,7 @@ test("mask element in screenshot", async ({ page }, testInfo) => {
   await page.goto("https://letcode.in/edit");
   let signup = page.locator("text='Sign up'")
   let login = page.locator("text='Log in'")
+  let sc1 = await page.screenshot()
   let sc = await page.screenshot({path: "./screenshotHideElement.png",mask: [signup, login] });
   // await testInfo.attach("highlighted screenshot", {
   //     body: sc,

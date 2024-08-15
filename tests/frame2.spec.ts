@@ -1,19 +1,38 @@
+import { Browser, BrowserContext, Page, chromium } from "playwright";
 import { test } from "@playwright/test";
-test.skip("New Frame API", async ({ page }) => {
 
-    await page.goto("/frame");
-    const frame = page.frameLocator("#firstFr");
-    await frame.locator("input[name='fname']").type("koushik")
-    const lname = frame.locator("input[name='lname']");
-    await lname.type("chatterjee")
-    const text = await frame.locator("p.title.has-text-info").textContent();
-    console.log(text);
-});
-test.skip("Inner frame", async ({ page }) => {
-    await page.goto("/frame");
-    const frame = page.frameLocator("#firstFr");
-    const innerFrame = frame.frameLocator("iframe.has-background-white");
-    await innerFrame.locator("input[name='email']").type("koushik@letcode.in")
-    await frame.locator("input[name='fname']").type("koushik");
-    await page.click("'Log in'");
-})
+// test.describe("Frames handling concept", () => {
+
+//     let browser: Browser;
+//     let context: BrowserContext;
+//     let page: Page;
+//     test.beforeAll(async () => {
+//         browser = await chromium.launch({
+//             headless: false
+//         });
+//         context = await browser.newContext()
+//         page = await context.newPage();
+//         await page.goto("https://letcode.in/frame")
+//     })
+
+    test("Interact with frames and inner frames", async ({page}) => {
+        await page.goto("https://letcode.in/frame")
+        const frame = page.frame({ name: "firstFr" });
+        // frame?.fill("")
+        if (frame != null) {
+            await frame.fill("input[name='fname']", "Koushik");
+            await frame.fill("input[name='lname']", "Chatterjee");
+
+            // inner frame
+            const frames = frame.childFrames();
+            console.log('No. of inner frames: ' + frames.length);
+            if (frames != null)
+                await frames[0].fill("input[name='email']", "koushik@mail.com")
+            else {
+                console.log("Wrong frame");
+            }
+            const parent = frames[0].parentFrame()
+            // await frame.fill("input[name='lname']", "Letcode");
+            await parent?.fill("input[name='lname']", "Youtube");
+        } else throw new Error("No such frame")
+    })

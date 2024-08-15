@@ -11,5 +11,7 @@ test.skip('Handle File Downloads', async({context})=>{
     const download = await downloadPromise;
   
   // Wait for the download process to complete and save the downloaded file somewhere.
-  await download.saveAs('./tests/downloadedFiles/' + download.suggestedFilename());
+  await download.saveAs('./tests/downloadedFiles/' + download.suggestedFilename());// suggested file name will be the actual file name
+  await download.saveAs('./tests/downloadedFiles/abc.xlsx'); // file renamed to abc.xlsx
+  // await expect(download.suggestedFilename()).toBe('car-lite.svg');
   });

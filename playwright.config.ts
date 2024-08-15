@@ -35,7 +35,7 @@ export default defineConfig({
   // outputDir: 'test-results', // Folder for test artifacts such as screenshots, videos, traces, etc.
   /* Retry on CI only */
   // retries: process.env.CI ? 2 : 0,
-  retries: 2,
+  retries: 0,
   // The maximum number of test failures for the whole test suite run. After reaching this number, testing will stop and exit with an error.
   // maxFailures: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
@@ -51,7 +51,8 @@ export default defineConfig({
   // multiple reporters. instead of above single one
     //  reporter: [
     //   ['list'],
-    //   ['json', {  outputFile: 'test-results.json' }] // PLAYWRIGHT_JSON_OUTPUT_NAME=results.json npx playwright test --reporter=json
+    //   ['json', {  outputFile: 'test-results.json' }], // PLAYWRIGHT_JSON_OUTPUT_NAME=results.json npx playwright test --reporter=json
+        // ["html",{ open: "never"}] // always, never
     // ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -73,11 +74,12 @@ export default defineConfig({
   },
 
   /* Browser configuration. each tests will run in all the below browsers simultaneously */
+  // we can select it from dropdwn options which we get when clicking inside square bracket
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
 
     // {
     //   name: 'firefox',
@@ -133,11 +135,11 @@ export default defineConfig({
     //   testMatch: /.*smoke.spec.ts/,
     //   retries: 0,
     // },
-     {
-      name: 'Smoke',
-      testMatch: /.*.spec.ts/,
-      retries: 0,
-    },
+    //  {
+    //   name: 'Smoke',
+    //   testMatch: /.*.spec.ts/,
+    //   retries: 0,
+    // },
     // {
     //   name: 'Default',
     //   testIgnore: /.*smoke.spec.ts/,

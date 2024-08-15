@@ -1,12 +1,13 @@
-import { test, expect } from '@playwright/test';
-import { AssertionError } from 'assert';
-import { listenerCount } from 'process';
-const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.
+// import { test, expect } from '@playwright/test';
+// import { AssertionError } from 'assert';
+// const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.
 
 // https://playwright.dev/docs/locators
 // https://playwright.dev/docs/other-locators
 // https://playwright.dev/docs/best-practices#use-codegen-to-generate-locators // to generate locator
 // https://playwright.dev/docs/best-practices#use-playwrights-tooling // hepls to write scripting
+
+// https://www.browserstack.com/guide/playwright-selectors // all selectors explaied
 
 // page.getByRole() to locate by explicit and implicit accessibility attributes.
 // page.getByText() to locate by text content.
@@ -45,7 +46,16 @@ test.skip('Login test. May skip', async ({ page }) => {
   // ...
 });
 
+//input[@placeholder='start date']
+// await page.click('//input[@placeholder='start date']')
+// await page.click('//th[@class='datepicker']')
+// await page.click('(//th[@class='datepicker'])[1]')
 // await page.pause()
+
+// continue an action till a condition matches
+// while (await page.locator('abcd').textContent() != 'shaji'){
+//   await page.locator('next').click()
+// }
 
 // console.log(page.url());
 
@@ -191,14 +201,20 @@ test('click on a link', async ({ page }) => {
   // Expect an attribute "to be strictly equal" to the value.
   // await expect(getStarted).toHaveAttribute('href', '/docs/intro');
   // await expect(page.locator('selector')).toHaveAttribute('class', /.*value/)
+  // await expect(page.locator('selector')).toHaveAttribute('placeholder', /shaji/)
   // await expect(locator).toHaveClass('selected row');
 
 // sample for Annotation. just to display some information in the test report
 test('annotation in a test', { 
-  annotation: {
-    type: 'issue',
+  annotation: [{
+    type: 'issue1',
     description: 'https://github.com/microsoft/playwright/issues/23180',
   },
+  {
+    type: 'issue2',
+    description: 'https://github.com/microsoft/playwright/issues/23180',
+  },
+],
 }, async ({ page }) => {
   await page.goto('https://playwright.dev/');
 });
@@ -363,14 +379,14 @@ test('Declares a test step', async ({ page }) => {
 // expect(locator).toBeHidden()	Element is not visible
 // expect(locator).toBeInViewport()	Element intersects viewport
 // expect(locator).toBeVisible()	Element is visible
-// expect(locator).toContainText()	Element contains text
+// expect(locator).toContainText()	Element contains text /// checking partial text
 // expect(locator).toHaveAttribute()	Element has a DOM attribute
 // expect(locator).toHaveClass()	Element has a class property
 // expect(locator).toHaveCount()	List has exact number of children
 // expect(locator).toHaveCSS()	Element has CSS property
 // expect(locator).toHaveId()	Element has an ID
 // expect(locator).toHaveJSProperty()	Element has a JavaScript property
-// expect(locator).toHaveText()	Element matches text
+// expect(locator).toHaveText()	Element matches text // checking entire text
 // expect(locator).toHaveValue()	Input has a value
 // expect(locator).toHaveValues()	Select has options selected
 // expect(page).toHaveTitle()	Page has a title
@@ -406,8 +422,12 @@ test.skip('sample commands about a test. May skip', async ({ page }) => {
   // await locator.first();
   // await locator.focus();
 
-  const locator = page.frameLocator('iframe').getByText('Submit');
-  await locator.click(); 
+  // page.frameLocator('iframe').getByText('Submit');
+  // page.frameLocator('#frame1').frameLocator('iframe').getByText('Child Iframe');
+
+  // const actualFrameText = await page.locator('xyz').textContent();
+  // expect(expectedFrameText == actualFrameText).toBeTruthy();
+
   // await locator.getAttribute(name); Returns the matching element's attribute value.
   await page.getByAltText('Playwright logo').click(); //Allows locating elements by their alt text. 
 
@@ -436,7 +456,7 @@ test.skip('sample commands about a test. May skip', async ({ page }) => {
   await page.getByRole('button', { name: /submit/i }).click();
   await page.getByTestId('directions').click(); //<button data-testid="directions">Itinéraire</button>
   await expect(page.getByTitle('Issues count')).toHaveText('25 issues'); //Allows locating elements by their title attribute.
-  // await expect(await page.$(selector)).toHaveText(expectedText, { ignoreCase: true });
+  // await expect(await page.$(selector)).toHaveText(expectedText, { ignoreCase: true });// checking entire text
   // await expect([page, selector]).toHaveText(expectedText, { textMethod: 'innerText' });
   // await expect([page, '#toast']).toHaveText(EXPECTED_TEXT, { 3000, trim: true }); //timeout
 
@@ -444,7 +464,7 @@ test.skip('sample commands about a test. May skip', async ({ page }) => {
 
   await page.getByRole('link').hover();//Hover over the matching element.
   await locator.innerText();
-  const value = await page.getByRole('textbox').inputValue();
+  const value = await page.getByRole('textbox').inputValue();//retrieving the value in the text box
   const checked = await page.getByRole('checkbox').isChecked();
   const disabled = await page.getByRole('button').isDisabled();
   const editable = await page.getByRole('textbox').isEditable();
@@ -494,6 +514,15 @@ await page.getByLabel('Choose a color').selectOption('blue');// Single selection
 await page.getByLabel('Choose a color').selectOption({ label: 'Blue' });// Single selection matching the label
 await page.getByLabel('Choose multiple colors').selectOption(['red', 'green', 'blue']);// Multiple selected items
 });
+  // await page.selectOption('select#dropdownId', 'value'); // text shown against the tag 'value' in application
+  // await page.selectOption('select#dropdownId', {label : "Tuesday"});// text shown to user in dropdown
+  // await page.selectOption('select#dropdownId', {index : 5});// text shown to user in dropdown
+  // await page.selectOption('#multiSelect', [ {label: "Texas"}, {label: "London"}, {index : 5} ]);// text shown to user in dropdown
+
+  // console.log(await page.locator("#inventory_container div.inventory_item_label a div").first().textContent());
+  // const selectedText = await page.innerText('.dropdown-toggle'); // Replace with the actual selector to get the text of the selected option
+  // console.log(`Selected option text: ${selectedText}`);
+
 
 test('for loop. looping item', async ({ page }) => {
   for (const li of await page.getByRole('listitem').all())
@@ -551,10 +580,11 @@ await newEmail.click();
 // await page.locator('button').click(); // same as above
 // await page.locator('//button').click(); // same as above
 
-// await expect(page.locator('//button').toHaveText('abcd', { ignoreCase: true });
+// await expect(page.locator('//button').toHaveText('abcd', { ignoreCase: true });// checking entire text
 
 // Fill an input with the id "username"
-// await page.locator('id=username').fill('value');
+// await page.locator('id=username').fill('shaji');
+// await page.locator('id=username').type('shaji');
 
 // Click an element with data-test-id "submit"
 // await page.locator('data-test-id=submit').click();
@@ -613,7 +643,7 @@ await newEmail.click();
 //   }
 // 
 
-
+//await page.locator('abcd).textContent()
 
 // soft Assertion
 // await expect.soft(page.getByRole('heading', { name: 'Subscribe' })).toBeTruthy();
@@ -653,3 +683,48 @@ await expect.poll(async () => {
 // reading url and slit and pop
   // const filename = page.url()?.split('/').pop()
   // console.log(`Window opened: ${filename}`)
+
+
+  // locator stores in a variable and do multiple actions  
+// let element = await page.locator("[name=\"q\"]");
+// await element.click();
+// await element.type("LambdaTest");
+// await element.press("Enter");
+
+// const assert = require("assert");
+// const title = await page.title()
+// assert.equal(title,"LambdaTest at DuckDuckGommmm","Page title does not match");
+
+
+// verification using locator and text
+// const toggle = page.locator('.setting-item-toggle');
+//     await expect(toggle.locator('text=Show original')).not.toBeChecked();
+//     await expect(toggle.locator('text=Compare gzipped')).toBeChecked();
+//     await expect(toggle.locator('text=Prettify markup')).not.toBeChecked();
+//     await expect(toggle.locator('text=Multipass')).not.toBeChecked();
+
+// verification using locator and text with use of for loop
+//   const enabledOptions = [
+//       'Prefer viewBox to width/height',
+//       'Remove raster images',
+//       'Remove script elements',
+//       'Remove style elements',
+//     ];
+//  for (const option of enabledOptions) {
+//       const locator = page.locator(`.setting-item-toggle >> text=${option}`);
+//       await expect(locator).toBeChecked();
+//     }
+
+
+
+//verifying multiple texts together
+// await page.goto('https://demo.playwright.dev/svgomg');
+//   await expect(page.locator('.menu li')).toHaveText([
+//     'Open SVG',
+//     'Paste markup',
+//     'Demo',
+//     'Contribute'
+//   ]);
+
+
+//  await expect(downloadButton).toHaveAttribute('href', /blob/,{ timeout: 10000 });

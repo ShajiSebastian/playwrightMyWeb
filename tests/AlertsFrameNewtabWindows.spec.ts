@@ -7,7 +7,7 @@ test('Verify Alerts, Frame & Windows Page', async ( {alertsFrameWindowsPage, pag
     await page.getByText('Browser Windows', { exact: true }).click();
     await alertsFrameWindowsPage.verifyNewTab(`https://demoqa.com/sample`);
     await alertsFrameWindowsPage.verifyNewWindow(`https://demoqa.com/sample`);
-    await page.getByText('Alerts', { exact: true }).click(); 
+    await page.getByText('Alerts', { exact: true }).click(); // this is difficult. refer alertDialogue.spec.ts
     await alertsFrameWindowsPage.enterTextAndAccept(`Hello`); // Enter Text Hello in alert prompt and click ok
     await page.getByText('Frames', { exact: true }).click(); 
     await alertsFrameWindowsPage.verifyFrameText('This is a sample page');
