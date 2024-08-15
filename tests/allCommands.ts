@@ -354,6 +354,11 @@ test('Declares a test step', async ({ page }) => {
 });
 })
 
+// scroll into view commands
+// await page.get_by_role('link', name="Contact Us").scroll_into_view_if_needed()
+// await page.mouse.wheel(0, 500);  // Scroll down by 500 pixels
+// page.keyboard.press("PageUp", delay=1000)
+
 // variable declaring in one file. importing in another file. using it in command
 // in this example the url is declared in /src/utils/constants file and importing it in test file
 // export const BASE_URL = 'http://the-internet.herokuapp.com';

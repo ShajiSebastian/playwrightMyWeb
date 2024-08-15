@@ -10,3 +10,7 @@ node_modules/
 .DS_Store
 e2e/.DS_Store
 .history/
+Lambdainfo.txt
+screenshot.png
+screenshotHideElement.png
+tests/.DS_Store
