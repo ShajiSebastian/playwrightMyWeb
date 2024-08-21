@@ -1,6 +1,6 @@
 // https://www.lambdatest.com/learning-hub/automate-date-pickers-with-playwright
 
-import { test } from "@Playwright/test";
+import { test } from "@playwright/test";
 import moment from "moment";
  
  test("Calendar demo using fill function", async ({ page }) => {

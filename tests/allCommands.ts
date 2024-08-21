@@ -122,12 +122,7 @@ test.skip('screenshot taking', async ({ page }) => {
 //   await page.screenshot(testInfo.outputPath('screenshot.png'));
 // });
 
-test('Attach screenshot in report', async ({ page }, testInfo) => {
-  await page.goto('https://playwright.dev');
-  await expect(page).toHaveURL('https://playwright.dev/');
-  const screenshot = await page.screenshot();
-  await testInfo.attach('screenshotShaji', { body: screenshot, contentType: 'image/png' });
-});
+
 // await page.getByRole('link').screenshot(); //Take a screenshot of the element matching the locator.
 
  // await page.screenshot({ path: 'screenshot.png' }); // Screenshots

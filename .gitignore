@@ -14,3 +14,5 @@ Lambdainfo.txt
 screenshot.png
 screenshotHideElement.png
 tests/.DS_Store
+*.png
+tests/visualRegressionTesting.spec.ts-snapshots/

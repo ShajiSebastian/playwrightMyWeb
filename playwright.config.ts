@@ -46,13 +46,13 @@ export default defineConfig({
   // reporter: process.env.CI 
     // ? 'dot' //[["list"], ["html"], ["@currents/playwright"]]
     // : 'list', //[["html"], ["indent-list-reporter"]], // to be used in CI. // Dot reporter is very concise - it only produces a single character per successful test run. It is the default on CI and useful where you don't want a lot of output., default 'list' when running locally
-     reporter: 'html', //'list','line','html','dot'
+     reporter: 'html', //'list','line','html','dot'. dot only in console
     //  reporter: [['list', { printSteps: true }]], //opt into the step rendering
   // multiple reporters. instead of above single one
     //  reporter: [
-    //   ['list'],
+    //   ['list'], //'list','line','html','dot'. dot only in console
     //   ['json', {  outputFile: 'test-results.json' }], // PLAYWRIGHT_JSON_OUTPUT_NAME=results.json npx playwright test --reporter=json
-        // ["html",{ open: "never"}] // always, never
+        // ["html",{ open: "always"}] // always, never, on-failure
     // ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

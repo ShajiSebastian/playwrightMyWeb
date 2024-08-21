@@ -4,7 +4,6 @@ import { promiseHooks } from 'v8';
 
 test("multiple tabs- second tab getting from first tab- simple one", async ({ page }) => {  
     await page.goto("https://playwright.dev/")
-    await page.waitForTimeout(2000) 
 
     const [page2] = await Promise.all ([
         page.waitForEvent('popup' ), // use only comma here. here page is a user defined word. we can use any word like 'popup', 'abc' etc
@@ -126,4 +125,9 @@ test.skip("multiple tabs- second tab is a new url", async ({ context }) => {
     console.log('current page111 is:', await page.title())
     console.log('current page222 is:', await page2.title())
     
+})
+
+test("multiple tabs- second tab getting from first tab - 3rd way", async ({ page }) => {  
+    const newPage = await page.context().newPage()
+    await newPage.goto("https://playwright.dev/")
 })
