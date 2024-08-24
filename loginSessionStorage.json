@@ -1,0 +1,25 @@
+{
+  "cookies": [
+    {
+      "name": "user",
+      "value": "d1907f13-071d-716d-6242-55d2223a06bc",
+      "domain": "demoblaze.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tokenp_",
+      "value": "dGVzdDE3MjUwNzc=",
+      "domain": "demoblaze.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

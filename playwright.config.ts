@@ -10,6 +10,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  globalSetup: "./globalSetup_LoginSessionStorage.ts",
   // timeout: 30000,
   // timeout: 5 * 60 * 1000,
   // Maximum time in milliseconds the whole test suite can run. Zero timeout (default) disables this behavior. Useful on CI to prevent broken setup from running too long and wasting resources
@@ -71,6 +72,7 @@ export default defineConfig({
     // browserName: 'firefox',
     // video: 'on-first-retry',//'off','on','retain-on-failure','on-first-retry',
     // launchOptions: {slowMo: 1000}// for slow execution
+    storageState: "./loginSessionStorage.json",
   },
 
   /* Browser configuration. each tests will run in all the below browsers simultaneously */
