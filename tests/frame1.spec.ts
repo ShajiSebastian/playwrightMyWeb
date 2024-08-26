@@ -29,11 +29,9 @@ test('Getting inner frame', async ({ page }) => {
     await page.frameLocator("#firstFrame").frameLocator("InnerFramelocator")?.locator('input[name="fname"]').fill('christo')
 })
 
+// page.frameLocator('abc').first()
+// page.frameLocator('abc').last()
+// page.frameLocator('abc').nth(2)
 
-// Locate element inside frame
-// await page.frameLocator('.frame-class').getByLabel('User Name').fill('John');;
-// await page.frameLocator('iframe[title="SIPPs explained"]').getByLabel('Play').click();
 // await page.frame('frame-login');// Get frame using the frame's name attribute
 // await page.frame({ url: /.*domain.*/ });// Get frame using frame's URL
-// await await page.frame('frame-login').fill('#username-input', 'John');// Interact with the frame
-// await page.frameLocator('#my-frame').getByRole('button', { name: 'Sign in' }).click();

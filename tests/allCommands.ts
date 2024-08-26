@@ -728,3 +728,5 @@ await expect.poll(async () => {
 
 
 //  await expect(downloadButton).toHaveAttribute('href', /blob/,{ timeout: 10000 });
+
+// const userName = 'shaji' + Date.now().toString() // to create a unique username by adding a dynamic text to a variable name

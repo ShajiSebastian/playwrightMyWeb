@@ -1,9 +1,23 @@
-// import { test } from "@playwright/test";
+import { test } from "@playwright/test";
 
+test.skip("Calculate youtube playlist duration", async ({ page }) => {
+            await page.goto("https://www.youtube.com/playlist?list=PL699Xf-_ilW6vI9FHmePi1TvKyzYATgXi");
+            // const videos = await page.$$("ytd-thumbnail-overlay-time-status-renderer span");
+            const videos = await page.$$("ytd-thumbnail-overlay-time-status-renderer span");
+            console.log('Number of videos:' + videos.length);
+            await Promise.all(
+                            videos.map(async ele => {
+                                const duration = await ele.innerText();
+                                console.log('duration of video:' + duration.length);
+                            }))
+})
+
+
+// test("Calculate youtube playlist duration", async ({ page }) => {
 // const list = ["https://www.youtube.com/playlist?list=PL699Xf-_ilW6vI9FHmePi1TvKyzYATgXi",
 //     "https://www.youtube.com/playlist?list=PL699Xf-_ilW7EyC6lMuU4jelKemmS6KgD"];
 // list.forEach(url => {
-//     test.skip("Calculate youtube playlist duration" + Date.now(), async ({ page }) => {
+//     test("Calculate youtube playlist duration" + Date.now(), async ({ page }) => {
 //         await page.goto(url);
 //         const videos = await page.$$("ytd-thumbnail-overlay-time-status-renderer span");
 //         console.log(videos.length);

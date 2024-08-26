@@ -22,13 +22,19 @@ export default defineConfig({
   // },
   name: 'acceptance tests by shaji',
   // globalTimeout: process.env.CI ? 10000 * 1 * 1 : undefined,
+
+  //Following configuration decides which all tests should run
   testDir: './tests',
   // testMatch: /.*\.e2e\.js/, // run only matching test files
+  // testMatch: [ "tests/abc.spec.ts",
+                  // "tests/pqr.spec.ts",
+                // ], // run only matching test files
   // testIgnore: '**/test-assets/**', // to ignore test files
   // Filter to only run tests with a title matching one of the patterns. Global configuration
   // grep: /smoke/,
   // Filter to only run tests with a title not matching one of the patterns
   // grepInvert: /manual/,
+
   /* Run all tests in all files in parallel. By default, test files are run in parallel. Tests in a single file are run in order*/
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

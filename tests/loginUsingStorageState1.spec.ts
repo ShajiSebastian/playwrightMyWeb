@@ -10,25 +10,25 @@ import { test, expect } from '@playwright/test';
 //       2. If using in test loadEnvFile, mention the below in our test file
 
 
-test.only('Uses cookie given at Global level', async ({ page, context }) => {
+test('Uses cookie given at Global level', async ({ page, context }) => {
   // await context.clearCookies() // clear cookie given in global configuration
   await page.goto('https://demoblaze.com/');
   await expect(page.locator('#logout2')).toBeVisible()
 });
 
-test.only('Uses cookie given at Global level- test 1', async ({ page }) => {
+test('Uses cookie given at Global level- test 1', async ({ page }) => {
   await page.goto('https://demoblaze.com/');
   await page.waitForTimeout(3000)
   await expect(page.locator('#logout2')).toBeVisible()
 });
 
 test.use({ storageState: "./loginSessionStorage.json" })
-test.only('Uses cookie given at test level- test1', async ({ page }) => {
+test('Uses cookie given at test level- test1', async ({ page }) => {
   await page.goto('https://demoblaze.com/');
   await expect(page.locator('#logout2')).toBeVisible()
 });
 
-test.only('Uses cookie given at test level- test2', async ({ browser }) => {
+test('Uses cookie given at test level- test2', async ({ browser }) => {
   const context = await browser.newContext({
     storageState: "./loginSessionStorage.json"
   })
