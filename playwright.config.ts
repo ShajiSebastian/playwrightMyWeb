@@ -10,7 +10,9 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  globalSetup: "./globalSetup_LoginSessionStorage.ts",
+  // globalSetup: "./globalSetup_LoginSessionStorage.ts",
+  // globalSetup: "./globalSetup_MultipleEnviroments.ts",
+  
   // timeout: 30000,
   // timeout: 5 * 60 * 1000,
   // Maximum time in milliseconds the whole test suite can run. Zero timeout (default) disables this behavior. Useful on CI to prevent broken setup from running too long and wasting resources
